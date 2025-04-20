@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Dự Án Tình Nguyện</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="logo.png">
+
+    <style>
+        body {
+            background: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            max-width: 700px;
+            margin: 60px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        .back-button {
+            margin-bottom: 20px;
+        }
+        .back-button a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin: 15px 0 5px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        button {
+            margin-top: 25px;
+            padding: 12px 24px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="bgVideo">
+        <source src="nen.mp4" type="video/mp4">
+        Trình duyệt của bạn không hỗ trợ video nền.
+      </video>
+    <div class="form-container">
+        <div class="back-button">
+            <a href="index.html">← Quay lại trang chính</a>
+        </div>
+
+        <h1>Đăng Dự Án Tình Nguyện</h1>
+        <form id="postProjectForm">
+            <label for="projectTitle">Tiêu đề dự án</label>
+            <input type="text" id="projectTitle" required>
+
+            <label for="projectCategory">Danh mục</label>
+            <select id="projectCategory">
+                <option value="Môi trường">Môi trường</option>
+                <option value="Giáo dục">Giáo dục</option>
+                <option value="Y tế">Y tế</option>
+                <option value="Khác">Khác</option>
+            </select>
+
+            <label for="projectLocation">Địa điểm</label>
+            <input type="text" id="projectLocation" required>
+
+            <label for="projectDate">Ngày tổ chức</label>
+            <input type="date" id="projectDate" required>
+
+            <label for="projectImage">Ảnh đại diện (URL)</label>
+            <input type="text" id="projectImage" placeholder="https://...">
+
+            <label for="projectDescription">Mô tả chi tiết</label>
+            <textarea id="projectDescription" rows="5" required></textarea>
+
+            <button type="submit">Đăng Dự Án</button>
+        </form>
+    </div>
+
+    <script>
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            alert('Bạn cần đăng nhập để đăng dự án.');
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('postProjectForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const newProject = {
+                id: Date.now(),
+                title: document.getElementById('projectTitle').value,
+                category: document.getElementById('projectCategory').value,
+                location: document.getElementById('projectLocation').value,
+                date: new Date(document.getElementById('projectDate').value).toLocaleDateString('vi-VN'),
+                image: document.getElementById('projectImage').value || '/api/placeholder/400/200',
+                description: document.getElementById('projectDescription').value,
+                owner: currentUser
+            };
+
+            const existing = JSON.parse(localStorage.getItem('customProjects') || '[]');
+            existing.push(newProject);
+            localStorage.setItem('customProjects', JSON.stringify(existing));
+
+            alert('Dự án đã được đăng thành công!');
+            const goToProfile = confirm('Bạn có muốn chuyển đến trang cá nhân của mình không?');
+            if (goToProfile) {
+                window.location.href = 'profile.html';
+            }
+        });
+    </script>
+    <audio id="backgroundMusic" autoplay loop >
+        <source src="nen.mp3" type="audio/mpeg">
+        Trình duyệt không hỗ trợ phát âm thanh.
+      </audio>
+</body>
+<script>
+    window.addEventListener("click", () => {
+      const music = document.getElementById("backgroundMusic");
+      if (music && music.paused) {
+        music.volume = 0.5;
+        music.play().catch(err => console.log("Không thể phát nhạc:", err));
+      }
+    }, { once: true });
+  </script>
+  
+</html>

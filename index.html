@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết Nối Tình Nguyện - Nền tảng kết nối tình nguyện viên với cộng đồng</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="logo.png">
+</head>
+<body>
+    <video autoplay muted loop id="bgVideo">
+        <source src="nen.mp4" type="video/mp4">
+        Trình duyệt của bạn không hỗ trợ video nền.
+      </video>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="logo.png" alt="Logo">
+                <h1>Kết Nối Tình Nguyện</h1>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav>
+                <ul id="mainMenu">
+                    <li><a href="#home">Trang chủ</a></li>
+                    <li><a href="#projects">Dự án</a></li>
+                    <li><a href="#testimonials">Cộng đồng</a></li>
+                    <li><a href="#cta">Về chúng tôi</a></li>
+                    <li id="profileTab" style="display: none;">
+                        <a href="profile.html" id="profileLink"></a>
+                    </li>                    
+                    <li><a href="#" class="btn btn-outline">Đăng nhập</a></li>
+                    <li><a href="#" class="btn btn-primary">Đăng ký</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h2>Cùng nhau kiến tạo một cộng đồng tốt đẹp hơn</h2>
+            <p>Nền tảng kết nối tình nguyện viên với các dự án cộng đồng ý nghĩa trên khắp Việt Nam</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">Tìm cơ hội tình nguyện</a>
+                <a href="post.html" class="btn btn-outline" style="color: white; border-color: white;">Đăng dự án</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats" id="stats">
+        <div class="container">
+            <h2>Tác động của chúng ta</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="volunteers-count">0</div>
+                    <div class="stat-text">Tình nguyện viên</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="projects-count">0</div>
+                    <div class="stat-text">Dự án</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="organizations-count">0</div>
+                    <div class="stat-text">Tổ chức</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="hours-count">0</div>
+                    <div class="stat-text">Giờ tình nguyện</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="guide">
+        <div class="container">
+            <div class="section-header">
+                <h2>Cách thức hoạt động</h2>
+                <p>Chỉ với vài bước đơn giản, bạn có thể bắt đầu hành trình tình nguyện của mình</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <i>1</i>
+                    </div>
+                    <h3>Tạo tài khoản</h3>
+                    <p>Đăng ký tài khoản và hoàn thiện hồ sơ với kỹ năng, sở thích và thời gian rảnh của bạn</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i>2</i>
+                    </div>
+                    <h3>Tìm dự án phù hợp</h3>
+                    <p>Khám phá các dự án phù hợp với kỹ năng, sở thích và thời gian của bạn</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i>3</i>
+                    </div>
+                    <h3>Tham gia và đóng góp</h3>
+                    <p>Đăng ký tham gia dự án và bắt đầu đóng góp công sức của mình cho cộng đồng</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects -->
+    <section class="featured-projects" id="projects"  style="background-color: rgba(0, 0, 0, 0.2);">
+        <div class="container">
+            <div class="search-bar" style="margin: 20px 0;">
+                <input type="text" id="searchInput" placeholder="🔍 Tìm kiếm dự án..." 
+                       style="padding: 10px; width: 100%; border-radius: 8px; border: 1px solid #ccc;">
+              </div>
+            <div class="section-header">
+                <h2 style="color: white;">Dự án nổi bật</h2>
+                <p style="color: white;">Khám phá những dự án đang cần sự hỗ trợ của bạn ngay bây giờ</p>
+            </div>
+            <div class="filters">
+                <select id="filterCategory">
+                    <option value="">-- Thể loại --</option>
+                    <option value="Môi trường">Môi trường</option>
+                    <option value="Giáo dục">Giáo dục</option>
+                </select>
+                <select id="filterLocation">
+                    <option value="">-- Địa điểm --</option>
+                    <option value="TP.HCM">TP.HCM</option>
+                    <option value="Lào Cai">Lào Cai</option>
+                    <option value="Vũng Tàu">Vũng Tàu</option>
+                </select>
+                <input type="date" id="filterDate">
+                <button class="btn btn-outline" id="clearFilters">Xoá bộ lọc</button>
+            </div>
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Projects will be added dynamically by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Map -->
+    <section class="map-section" id="maps">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tìm dự án gần bạn</h2>
+                <p>Khám phá các cơ hội tình nguyện xung quanh khu vực của bạn</p>
+            </div>
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Câu chuyện từ cộng đồng</h2>
+                <p>Hãy nghe những chia sẻ từ các tình nguyện viên và tổ chức của chúng tôi</p>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial-item active">
+                    <div class="testimonial-content">
+                        Tham gia Kết Nối Tình Nguyện đã giúp tôi tìm thấy nhiều dự án ý nghĩa và kết nối với những người có cùng chí hướng. Tôi có thể dễ dàng tìm kiếm các dự án phù hợp với thời gian rảnh và kỹ năng của mình.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="nva.png" alt="Nguyễn Văn A">
+                        </div>
+                        <div class="author-info">
+                            <h4>Nguyễn Văn A</h4>
+                            <p>Tình nguyện viên thường xuyên</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        Là một tổ chức nhỏ, chúng tôi luôn gặp khó khăn trong việc tìm kiếm tình nguyện viên. Kết Nối Tình Nguyện đã giúp chúng tôi tiếp cận được nhiều người tài năng và nhiệt huyết, giúp các dự án của chúng tôi thành công hơn.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="ttb.png" alt="Trần Thị B">
+                        </div>
+                        <div class="author-info">
+                            <h4>Trần Thị B</h4>
+                            <p>Quản lý dự án, Tổ chức Vì Trẻ Em</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        Tôi đã tham gia hơn 10 dự án khác nhau thông qua nền tảng này. Mỗi dự án đều mang đến cho tôi những trải nghiệm quý giá và cơ hội để phát triển bản thân trong khi giúp đỡ cộng đồng.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="lhc.png" alt="Lê Hoàng C">
+                        </div>
+                        <div class="author-info">
+                            <h4>Lê Hoàng C</h4>
+                            <p>Sinh viên, Đại học Quốc Gia</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <span class="slider-control active" data-index="0"></span>
+                    <span class="slider-control" data-index="1"></span>
+                    <span class="slider-control" data-index="2"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call To Action -->
+    <section class="cta" id="cta">
+        <div class="container" style="padding: 20px;">
+            <h2  style="color: white;">Hãy bắt đầu hành trình tình nguyện của bạn ngay hôm nay</h2>
+            <p  style="color: white;">Mỗi khoảnh khắc bạn dành cho cộng đồng đều có thể tạo nên sự khác biệt lớn lao trong cuộc sống của người khác</p>
+            <a href="#" class="btn btn-primary" id="registerNowBtn" style="border-radius: 3px; padding: 5px;">Đăng ký ngay</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Kết Nối Tình Nguyện</h3>
+                    <p>Nền tảng kết nối tình nguyện viên với các dự án cộng đồng ý nghĩa trên khắp Việt Nam</p>
+                    <div class="social-links">
+                        <a href="#"><span>FB</span></a>
+                        <a href="#"><span>YT</span></a>
+                        <a href="#"><span>IG</span></a>
+                        <a href="#"><span>LI</span></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Liên kết</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Trang chủ</a></li>
+                        <li><a href="#">Dự án</a></li>
+                        <li><a href="#">Cộng đồng</a></li>
+                        <li><a href="#">Về chúng tôi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Hỗ trợ</h3>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">Câu hỏi thường gặp</a></li>
+                        <li><a href="contact.html">Liên hệ</a></li>
+                        <li><a href="terms.html">Điều khoản sử dụng</a></li>
+                        <li><a href="privacy.html">Chính sách bảo mật</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Liên hệ</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:info@ketnoi.vn">ducgay@gmail.com</a></li>
+                        <li><a href="tel:+84912345678">+84 912 345 678</a></li>
+                        <li>THPT Chuyên Nguyễn Chí Thanh</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Kết Nối Tình Nguyện. Tất cả quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- Login/Register Modal -->
+    <div id="authModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button" id="closeModal">&times;</span>
+            <h2 id="authTitle">Đăng nhập</h2>
+            <form id="authForm">
+                <input type="text" id="authUsername" placeholder="Tên đăng nhập" required>
+                <input type="password" id="authPassword" placeholder="Mật khẩu" required>
+                <button type="submit" class="btn btn-primary" id="authSubmit">Đăng nhập</button>
+                <p id="toggleAuth" style="cursor:pointer; margin-top: 10px; color: var(--accent-color);">Chưa có tài khoản? Đăng ký</p>
+            </form>
+        </div>
+    </div>
+    
+
+
+
+
+    <script src="main.js"></script>
+    <div id="toast" class="toast hidden"></div>
+    <audio id="backgroundMusic" autoplay loop >
+        <source src="nen.mp3" type="audio/mpeg">
+        Trình duyệt không hỗ trợ phát âm thanh.
+      </audio>
+</body>
+<script>
+    window.addEventListener("click", () => {
+      const music = document.getElementById("backgroundMusic");
+      if (music && music.paused) {
+        music.volume = 0.5;
+        music.play().catch(err => console.log("Không thể phát nhạc:", err));
+      }
+    }, { once: true });
+  </script>
+  
+</html>

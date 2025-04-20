@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết dự án</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="icon" href="logo.png">
+
+</head>
+<body>
+
+    <!-- Ảnh nền hero -->
+    <div class="project-hero" id="projectHero"></div>
+    <div style="position: relative; z-index: 10; margin-top: -60px; margin-left: 30px;">
+        <a href="index.html#projects" class="btn-back">← Quay lại</a>
+    </div> 
+    
+    <!-- Nội dung dự án -->
+    <div class="container">
+        <div class="project-box">
+            <div id="projectDetail"></div>
+            <div id="projectActions" style="margin-top: 20px;"></div>
+        </div>
+    </div>
+
+    <!-- Bản đồ -->
+    <div class="container" style="margin-top: 40px;">
+        <div id="map" style="height: 300px;"></div>
+    </div>
+
+    <!-- Bình luận -->
+    <div class="container" style="margin: 50px 0;">
+        <h3>Bình luận</h3>
+        <div id="commentsList"></div>
+        <textarea id="commentInput" placeholder="Viết bình luận..." style="width:100%; margin-top:10px;"></textarea>
+        <button id="submitComment" class="btn btn-primary" style="margin-top:10px;">Gửi</button>
+    </div>
+
+    <script src="project.js"></script>
+    <audio id="backgroundMusic" autoplay loop >
+      <source src="nen.mp3" type="audio/mpeg">
+      Trình duyệt không hỗ trợ phát âm thanh.
+    </audio>
+</body>
+<script>
+  window.addEventListener("click", () => {
+    const music = document.getElementById("backgroundMusic");
+    if (music && music.paused) {
+      music.volume = 0.5;
+      music.play().catch(err => console.log("Không thể phát nhạc:", err));
+    }
+  }, { once: true });
+</script>
+</body>
+</html>

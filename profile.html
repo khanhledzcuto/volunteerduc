@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang cá nhân</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="logo.png">
+
+  <style>
+    body {
+      background: #f2f2f2;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    .back-button {
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    .back-button a {
+      text-decoration: none;
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+    .page-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .page-header h1 {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    .page-header p {
+      color: #666;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 40px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 30px;
+    }
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: url('https://i.pravatar.cc/100') no-repeat center/cover;
+      margin-right: 20px;
+      position: relative;
+    }
+    .avatar input {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .user-meta h2 {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+    .user-meta p {
+      margin: 5px 0;
+      color: #555;
+    }
+    .project-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .project-card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #fff;
+      padding: 20px;
+      transition: 0.3s;
+    }
+    .project-card:hover {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+    .project-card h3 {
+      margin-bottom: 10px;
+      color: var(--primary-dark);
+    }
+    .project-card p {
+      margin: 5px 0;
+      font-size: 0.95rem;
+    }
+    .edit-info {
+      margin-top: 10px;
+    }
+    .edit-info input {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-right: 10px;
+    }
+    .edit-info button {
+      padding: 6px 14px;
+      border: none;
+      border-radius: 6px;
+      background-color: var(--primary-color);
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+    <video autoplay muted loop id="bgVideo">
+        <source src="nen.mp4" type="video/mp4">
+        Trình duyệt của bạn không hỗ trợ video nền.
+      </video>
+  <div class="container">
+    <div class="back-button">
+      <a href="index.html">← Quay lại trang chính</a>
+    </div>
+
+    <div class="page-header">
+      <h1>Trang Cá Nhân</h1>
+      <p>Quản lý các dự án bạn đã đăng</p>
+    </div>
+
+    <div class="user-info">
+      <div class="avatar" id="avatarContainer">
+        <input type="file" id="avatarInput" accept="image/*">
+      </div>
+      <div class="user-meta">
+        <h2 id="profileName">Xin chào, ...</h2>
+        <p>Thành viên từ năm 2024</p>
+        <p>Email: <span id="userEmail">example@email.com</span></p>
+
+        <div class="edit-info">
+          <input type="text" id="newName" placeholder="Đổi tên hiển thị">
+          <button onclick="changeDisplayName()">Cập nhật</button>
+        </div>
+      </div>
+    </div>
+
+    <h2>Dự án bạn đã đăng (<span id="projectCount">0</span>)</h2>
+    <div id="myProjects" class="project-list"></div>
+  </div>
+
+  <script>
+    const currentUser = localStorage.getItem('currentUser');
+    const myProjectsEl = document.getElementById('myProjects');
+    const profileName = document.getElementById('profileName');
+    const userEmail = document.getElementById('userEmail');
+    const projectCount = document.getElementById('projectCount');
+    const avatarContainer = document.getElementById('avatarContainer');
+    const avatarInput = document.getElementById('avatarInput');
+
+    let displayName = localStorage.getItem('displayName_' + currentUser) || currentUser;
+    profileName.innerText = `Xin chào, ${displayName}`;
+    userEmail.innerText = `${currentUser}@gmail.com`;
+
+    if (!currentUser) {
+      myProjectsEl.innerHTML = '<p>Bạn chưa đăng nhập. <a href="index.html">Quay lại trang chủ</a></p>';
+      profileName.innerText = 'Bạn chưa đăng nhập';
+      userEmail.innerText = 'Không xác định';
+    } else {
+      const allProjects = JSON.parse(localStorage.getItem('customProjects') || '[]');
+      const myProjects = allProjects.filter(p => p.owner === currentUser);
+
+      projectCount.innerText = myProjects.length;
+
+      if (myProjects.length === 0) {
+        myProjectsEl.innerHTML = '<p>Bạn chưa đăng dự án nào.</p>';
+      } else {
+        myProjects.forEach(project => {
+          const div = document.createElement('div');
+          div.className = 'project-card';
+          div.innerHTML = `
+            <h3>${project.title}</h3>
+            <p><strong>Danh mục:</strong> ${project.category}</p>
+            <p><strong>Địa điểm:</strong> ${project.location}</p>
+            <p><strong>Ngày tổ chức:</strong> ${project.date}</p>
+            <p>${project.description}</p>
+          `;
+          myProjectsEl.appendChild(div);
+        });
+      }
+    }
+
+    function changeDisplayName() {
+      const newName = document.getElementById('newName').value.trim();
+      if (newName) {
+        localStorage.setItem('displayName_' + currentUser, newName);
+        profileName.innerText = `Xin chào, ${newName}`;
+      }
+    }
+
+    avatarInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          avatarContainer.style.backgroundImage = `url('${e.target.result}')`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+  <audio id="backgroundMusic" autoplay loop >
+    <source src="nen.mp3" type="audio/mpeg">
+    Trình duyệt không hỗ trợ phát âm thanh.
+  </audio>
+</body>
+<script>
+window.addEventListener("click", () => {
+  const music = document.getElementById("backgroundMusic");
+  if (music && music.paused) {
+    music.volume = 0.5;
+    music.play().catch(err => console.log("Không thể phát nhạc:", err));
+  }
+}, { once: true });
+</script>
+</body>
+</html>

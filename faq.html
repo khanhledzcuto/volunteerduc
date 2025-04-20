@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Câu hỏi thường gặp</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="logo.png">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+    }
+    .container {
+      max-width: 800px;
+      margin: 60px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: var(--primary-color);
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .faq-item {
+      margin-bottom: 30px;
+    }
+    .faq-item h3 {
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      color: #555;
+      margin: 0;
+    }
+    .back-link {
+      margin-top: 40px;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      color: var(--primary-color);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>❓ Câu hỏi thường gặp</h1>
+
+    <div class="faq-item">
+      <h3>Làm sao để tham gia dự án?</h3>
+      <p>Bạn chỉ cần bấm vào nút “Tham gia” tại chi tiết dự án và làm theo hướng dẫn.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Tôi có thể huỷ tham gia không?</h3>
+      <p>Được. Vào dự án bạn đã tham gia và chọn “Huỷ tham gia”.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Làm sao để tạo dự án?</h3>
+      <p>Sau khi đăng nhập, bạn có thể bấm “Đăng dự án” và điền thông tin cần thiết.</p>
+    </div>
+
+    <a href="index.html" class="back-link">← Quay lại trang chủ</a>
+  </div>
+  <audio id="backgroundMusic" autoplay loop >
+    <source src="nen.mp3" type="audio/mpeg">
+    Trình duyệt không hỗ trợ phát âm thanh.
+  </audio>
+</body>
+<script>
+window.addEventListener("click", () => {
+  const music = document.getElementById("backgroundMusic");
+  if (music && music.paused) {
+    music.volume = 0.5;
+    music.play().catch(err => console.log("Không thể phát nhạc:", err));
+  }
+}, { once: true });
+</script>
+  
+</body>
+</html>

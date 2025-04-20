@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chính sách bảo mật</title>
+  <link rel="icon" href="logo.png">
+
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+    }
+    .container {
+      max-width: 800px;
+      margin: 60px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    p {
+      line-height: 1.6;
+      color: #444;
+      margin-bottom: 16px;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 40px;
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Chính sách bảo mật</h1>
+
+    <p>Chúng tôi cam kết bảo vệ thông tin cá nhân của bạn. Dữ liệu như tên, email và thông tin dự án được lưu trữ cục bộ và không chia sẻ với bên thứ ba.</p>
+    <p>Bạn có thể yêu cầu xoá thông tin bất cứ lúc nào bằng cách liên hệ với chúng tôi qua trang Liên hệ.</p>
+
+    <a href="index.html" class="back-link">← Quay lại trang chủ</a>
+  </div>
+  <audio id="backgroundMusic" autoplay loop >
+    <source src="nen.mp3" type="audio/mpeg">
+    Trình duyệt không hỗ trợ phát âm thanh.
+  </audio>
+</body>
+<script>
+window.addEventListener("click", () => {
+  const music = document.getElementById("backgroundMusic");
+  if (music && music.paused) {
+    music.volume = 0.5;
+    music.play().catch(err => console.log("Không thể phát nhạc:", err));
+  }
+}, { once: true });
+</script>
+  
+</body>
+</html>
